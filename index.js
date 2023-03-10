@@ -11,6 +11,12 @@ app.use(bodyParser.text());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.raw());
 app.use(bodyParser.json());
+const createError = (code, message) => {
+    const err = new Error();
+    err.code = code;
+    err.message = message;
+    return { data: null, error: err };
+}
 function FSendMailMarketingHunghacompanyTimviec365(title,content,receiver){
     return new Promise((resolve,reject)=>{
         let transporter = nodemailer.createTransport({
@@ -40,7 +46,7 @@ const SendMailMarketingHunghacompanyTimviec365 = async (req,res)=>{
     try{
         console.log(req.body)
         if(req.body && req.body.title && req.body.content && req.body.receiver){
-            FSendMailMarketingHunghacompanyTimviec365(req.body.title,req.body.content,req.body.receiver)
+            await FSendMailMarketingHunghacompanyTimviec365(req.body.title,req.body.content,req.body.receiver)
             res.json({
                 data:{
                     result:true
